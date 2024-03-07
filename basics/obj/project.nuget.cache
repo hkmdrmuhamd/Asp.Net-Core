@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "TuOtJXjbVCjpx+n18Cq0YrS8cRaTrQvMVfV4HqKcQ8dBdDlGXe7pqQG5I9Deigb/fwOkiOv8rHtDWs803eNlsw==",
+  "success": true,
+  "projectFilePath": "D:\\AspNetCore\\basics\\basics.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\muham\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\muham\\.nuget\\packages\\system.drawing.common\\8.0.2\\system.drawing.common.8.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

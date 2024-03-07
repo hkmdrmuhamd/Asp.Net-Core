@@ -1,0 +1,21 @@
+@Model List<Courses>
+
+@section Header{
+    @await Html.PartialAsync("_Header")
+}
+<!--Yapılan işlem şu Header ile belirlenmiş alanı render ederken _Header dosyasının içerisini bu alana renderla. Bu sayede Header alanının içerisine _Card dosyasının içindeki kodları da render eder.-->
+
+<div class="row">
+    @foreach(var kurs in Model){
+        <div class="col-3">
+            <div class="card">
+                <img src="~/img/@kurs.Image" class="card-imp-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">@kurs.Title</h5>
+                    <p class="card-text">@kurs.Description</p>
+                    <a class="btn btn-primary" asp-controller="Course" asp-action="Details" asp-route-id="@kurs.Id">Detay</a> 
+                </div>
+            </div>
+        </div>
+    }
+</div>
