@@ -1,0 +1,41 @@
+@model UserInfo
+@{
+    ViewBag.Title = "Başvuru Formu";
+    Layout = "_Layout";
+}
+
+<h1 class="h4">Toplantı Katılım Formu</h1>
+<form method="Post" action=""> <!--Post isteği-->
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Ad Soyad*</label>
+        <span id="nameValidation" asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label">Telefon*</label>
+        <span id="phoneValidation" asp-validation-for="Phone" class="text-danger"></span>
+        <input asp-for="Phone" class="form-control"> 
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email*</label>
+        <span id="emailValidation" id="nameValidation" asp-validation-for="Email" class="text-danger"></span>
+        <input asp-for="Email" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="WillAttend" class="form-label">Katılım Durumu*</label>
+        <span id="willAttendValidation" asp-validation-for="WillAttend" class="text-danger"></span>
+        <select asp-for="WillAttend" class="form-select">
+            <option value="">Seçiniz</option>
+            <option value="true">Evet</option>
+            <option value="false">Hayır</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Kaydet</button>
+</form>
+
+<!--Model binding yapmak için sadece asp-for kullanmamız gerekmez. label içerisindeki for ile select içerisindeki id değerleri aynı olduğu sürece model bindig geçerli olacaktır. Ör:
+<div class="mb-3">
+    <label for="Email" class="form-label">Email</label>
+    <input type="email" name="Email" id="Email" class="form-control">
+</div>
+-->

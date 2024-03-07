@@ -1,0 +1,41 @@
+@model UserInfo
+@{
+    ViewBag.Title = "Başvuru Detayı";
+}
+
+<table class="table table-striped table-bordered">
+    @{
+        var className = Model.WillAttend == true ? "table-success" : "table-danger";
+        var katilim = Model.WillAttend == true ? "Katılıyor" : "Katılmıyor";
+    }
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Özellik</th>
+            <th scope="col">Değer</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>İsim</td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td>Telefon</td>
+            <td>@Model.Phone</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr class="@className">
+            <td>Katılım Durumu</td>
+            <td>
+                @katilim
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="d-flex justify-content-center">
+    <a class="btn btn-sm btn-outline-primary" href="/meeting/list">Katılımcıları Listele</a>
+</div>
+
