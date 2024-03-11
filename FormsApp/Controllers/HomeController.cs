@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using FormsApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Runtime.CompilerServices;
 
 namespace FormsApp.Controllers;
 
@@ -75,6 +76,50 @@ public class HomeController : Controller
 
         ViewBag.Categories = new SelectList(Repository.Categories, "CategoryId", "Name"); //Kategorilerin içini doldurmak için yapılır.
         return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int? id)
+    {
+        if(id == null)
+        {
+            return NotFound(); //404 sayfası basılır.
+        }
+        var entity = Repository.Products.FirstOrDefault(p => p.ProductId == id); //FirstOrDefault şartı sağlayan ilk ürünü alıp entity'e atar
+        if (entity == null)
+        {
+            return NotFound();
+        }
+        ViewBag.Categories = new SelectList(Repository.Categories, "CategoryId", "Name");
+        return View(entity);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, Product product, IFormFile? imageFile)
+    {
+        if (id != product.ProductId)
+        {
+            return NotFound();
+        }
+        if (ModelState.IsValid)
+        {
+            if(imageFile != null)
+            {
+                var extension = Path.GetExtension(imageFile.FileName).ToLower();
+                var randomFileName = $"{Guid.NewGuid().ToString()}{extension}"; 
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
+                
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+                product.Image = randomFileName;
+            }
+            Repository.EditProduct(product);
+            return RedirectToAction("Index");
+        }
+        ViewBag.Categories = new SelectList(Repository.Categories, "CategoryId", "Name");
+        return View(product);
     }
 
 }

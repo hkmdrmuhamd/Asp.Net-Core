@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Vcth2lQBztrH2yHSecHKV3SI1Hzs/ZiNatG+2H4W1e8=",
+  "Hash": "Got4NkvNdXkuO5vdbs/xU8NU9S0n8ac4cwLmAazjI5Y=",
   "Source": "FormsApp",
   "BasePath": "_content/FormsApp",
   "Mode": "Default",
@@ -238,12 +238,12 @@
       "OriginalItemSpec": "wwwroot\\img\\689b40b9-ba20-438a-b2ed-f614a55353fe.jpg"
     },
     {
-      "Identity": "C:\\Users\\muham\\OneDrive\\Belgeler\\GitHub\\Asp.Net-Core\\FormsApp\\wwwroot\\img\\7d66d444-c92f-46c2-ad28-5b9b73f48b4f.pdf",
+      "Identity": "C:\\Users\\muham\\OneDrive\\Belgeler\\GitHub\\Asp.Net-Core\\FormsApp\\wwwroot\\img\\b6d5498b-ca9a-4f35-b5a8-575d5fddeb8b.jpg",
       "SourceId": "FormsApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\muham\\OneDrive\\Belgeler\\GitHub\\Asp.Net-Core\\FormsApp\\wwwroot\\",
       "BasePath": "_content/FormsApp",
-      "RelativePath": "img/7d66d444-c92f-46c2-ad28-5b9b73f48b4f.pdf",
+      "RelativePath": "img/b6d5498b-ca9a-4f35-b5a8-575d5fddeb8b.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -252,7 +252,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\7d66d444-c92f-46c2-ad28-5b9b73f48b4f.pdf"
+      "OriginalItemSpec": "wwwroot\\img\\b6d5498b-ca9a-4f35-b5a8-575d5fddeb8b.jpg"
     },
     {
       "Identity": "C:\\Users\\muham\\OneDrive\\Belgeler\\GitHub\\Asp.Net-Core\\FormsApp\\wwwroot\\img\\ba9f7c7e-06bf-4294-ac78-6a94944e6459.jpg",
