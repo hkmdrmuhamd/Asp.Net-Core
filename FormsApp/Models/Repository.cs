@@ -15,7 +15,7 @@ namespace FormsApp.Models
             _products.Add(new Product { ProductId = 4, Name = "Iphone 12", Price = 33000, Image = "4.jpg", IsActive = true, CategoryId = 1 });
 
             _products.Add(new Product { ProductId = 5, Name = "MacBook Air M1", Price = 69900, Image = "5.jpg", IsActive = true, CategoryId = 2 });
-            _products.Add(new Product { ProductId = 6       , Name = "MacBook Air M2", Price = 78999, Image = "6.jpg", IsActive = true, CategoryId = 2 });
+            _products.Add(new Product { ProductId = 6, Name = "MacBook Air M2", Price = 78999, Image = "6.jpg", IsActive = true, CategoryId = 2 });
         }
 
         public static List<Product> Products
@@ -24,6 +24,11 @@ namespace FormsApp.Models
             {
                 return _products;
             }
+        }
+
+        public static void CreateProduct(Product model)
+        {
+            _products.Add(model);
         }
 
         public static List<Category> Categories

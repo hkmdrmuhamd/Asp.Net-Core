@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "YenLuqexrjUGofXATuGH6EDdedR6UCFa9UND92LYI4bJw4aZp6KbmJeixa+/RNcCmkMsRa9IVE9Vg64LGCPP/A==",
+  "dgSpecHash": "XQHm7eHrd+qrSInUkxZYXbVzIekUz9N5yNNC52iF/0lP39rZcBafqUBnSWnJiajJ0NRKYI2VsNhvtv9uT/BFgA==",
   "success": true,
   "projectFilePath": "C:\\Users\\muham\\OneDrive\\Belgeler\\GitHub\\Asp.Net-Core\\FormsApp\\FormsApp.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\muham\\.nuget\\packages\\copilotdev.net.api\\1.1.0\\copilotdev.net.api.1.1.0.nupkg.sha512"
+  ],
   "logs": []
 }

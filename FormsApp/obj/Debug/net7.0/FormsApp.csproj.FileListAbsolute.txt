@@ -29,3 +29,5 @@ C:\Users\muham\OneDrive\Belgeler\GitHub\Asp.Net-Core\FormsApp\obj\Debug\net7.0\r
 C:\Users\muham\OneDrive\Belgeler\GitHub\Asp.Net-Core\FormsApp\obj\Debug\net7.0\FormsApp.pdb
 C:\Users\muham\OneDrive\Belgeler\GitHub\Asp.Net-Core\FormsApp\obj\Debug\net7.0\FormsApp.genruntimeconfig.cache
 C:\Users\muham\OneDrive\Belgeler\GitHub\Asp.Net-Core\FormsApp\obj\Debug\net7.0\ref\FormsApp.dll
+C:\Users\muham\OneDrive\Belgeler\GitHub\Asp.Net-Core\FormsApp\bin\Debug\net7.0\CopilotDev.NET.Api.dll
+C:\Users\muham\OneDrive\Belgeler\GitHub\Asp.Net-Core\FormsApp\obj\Debug\net7.0\FormsApp.csproj.CopyComplete
