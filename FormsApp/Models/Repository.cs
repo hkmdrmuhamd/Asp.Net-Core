@@ -45,6 +45,15 @@ namespace FormsApp.Models
             }
         }
 
+        public static void DeleteProduct(Product product)
+        {
+            var entity = _products.FirstOrDefault(product => product.ProductId == product.ProductId);
+            if(entity != null)
+            {
+                _products.Remove(entity);
+            }
+        }
+
         public static List<Category> Categories
         {
             get
