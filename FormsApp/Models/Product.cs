@@ -14,16 +14,16 @@ namespace FormsApp.Models
 
         [Display(Name = "Fiyat")]
         [Required(ErrorMessage = "Ürün fiyatı alanı boş geçilemez")]
+        [Range(0, 110000, ErrorMessage = "Ürün değeri en az 0 en çok 110000 tl olmalıdır.")] //0 ile 110000 aralığında değer alabilir
         public decimal? Price { get; set; }
 
         [Display(Name = "Resim")]
-        [Required(ErrorMessage = "Ürün fotoğrafı alanı boş geçilemez")]
         public string Image { get; set; } = string.Empty;
 
         public bool IsActive { get; set; }
 
         [Display(Name = "Kategoriler")]
         [Required(ErrorMessage = "Ürün kategorisi alanı boş geçilemez")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

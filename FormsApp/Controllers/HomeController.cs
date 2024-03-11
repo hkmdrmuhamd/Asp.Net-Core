@@ -35,16 +35,46 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        ViewBag.Categories = new SelectList(Repository.Categories, "CategoryId", "Name"); //Kategorilerin içini doldurmak için yapılır.
+        ViewBag.Categories = new SelectList(Repository.Categories, "CategoryId", "Name"); 
         return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Product model) //bu şekilde bir kullanımda tüm product değerleri gönderilir. Belirli bazı product modellerini göndermek istiyorsak:
-        //public IActionResult Create([Bind("Name","Price")] Product Model) bu şekilde bir kullanım yapılabilir
+    public async Task<IActionResult> Create(Product model, IFormFile imageFile)//bu şekilde bir kullanımda tüm product değerleri gönderilir. Belirli bazı product modellerini göndermek istiyorsak:
+        //public IActionResult Create([Bind("Name","Price")] Product Model) bu şekilde bir kullanım yapılabilir. (Model Binding)
     {
-        Repository.CreateProduct(model);
-        return RedirectToAction("Index"); //İşlem bittikten sonra Index methoduna redirect ettik yani işlem tamamlandıktan sonra Index methodu çalışır.
-        
+        if (imageFile != null)
+        {
+            var extension = Path.GetExtension(imageFile.FileName).ToLower(); //Yüklenecek olan resmin uzantısını alır.
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                ModelState.AddModelError("", "Sadece jpg, jpeg ve png uzantılı doslayaları seçebilirsiniz.");
+            }
+            else
+            {
+                var randomFileName = $"{Guid.NewGuid().ToString()}{extension}"; //random file name üretir ve resmin uzantısını bu random name'in sonuna ekler.
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName); //resmin kaydedileceği dizin
+
+                using (var stream = new FileStream(path, FileMode.Create)) // Yüklenen dosyanın içeriği, belirtilen dosya yoluna (path) kopyalanır.
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                model.Image = randomFileName;
+                model.ProductId = Repository.Products.Count + 1;
+                Repository.CreateProduct(model);
+                return RedirectToAction("Index"); //İşlem bittikten sonra Index methoduna redirect ettik yani işlem tamamlandıktan sonra Index methodu çalışır.
+            }
+        }
+        else
+        {
+            ModelState.AddModelError("", "Lütfen bir resim seçiniz.");
+        }
+
+        ViewBag.Categories = new SelectList(Repository.Categories, "CategoryId", "Name"); //Kategorilerin içini doldurmak için yapılır.
+        return View(model);
     }
+
 }

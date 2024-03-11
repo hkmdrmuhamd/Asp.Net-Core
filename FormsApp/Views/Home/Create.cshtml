@@ -3,25 +3,25 @@
     ViewData["Title"] = "Create";
 }
 
-<form asp-controller="Home" asp-action="Create" method="post">
-    
+<form asp-controller="Home" asp-action="Create" method="post" enctype="multipart/form-data"> <!--enctype="multipart/form-data" kullanımı form içerisindeki input textler ve file bilgileri gönderilebilir bu tanımlamayı yapmazsak file type kullandığımız için hata verecektir.-->
+    <div style="color: red" asp-validation-summary="All"></div> <!--Bu şekilde sayfanın başına yazınca buradaki validationlar sayfadaki tüm alanlar için geçerli olsun anlamına gelir en üstte hata bilgileri yazar-->
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
         <input asp-for="Name" class="form-control" placeholder="Ürün Adı Giriniz" />
-        
+        <!--<span style="color: red" asp-validation-for="Name"></span> Bu şekilde yapınca da sayfadaki alanlar için ayrı ayrı validation yapabiliriz-->
     </div>
     <div class="mb-3">
         <label asp-for="Price" class="form-label"></label>
         <input asp-for="Price" class="form-control" placeholder="Fiyat Bilgisi Giriniz" />
     </div>
-    <div class="mb-3">
-        <label asp-for="Image" class="form-label"></label>
-        <input asp-for="Image" class="form-control" placeholder="Ürün resmini giriniz." />
+    <div>Resim</div>
+    <div class="input-group mb-3">
+        <input type="file" name="imageFile" id="imageFile" class="form-control" />
     </div>
     <div class="mb-3">
         <label asp-for="CategoryId" class="form-label"></label>
         <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
-            <option value="0">Hepsi</option>
+            <option value="">Hepsi</option>
         </select>
     </div>
     <div class="mb-3 form-check">
