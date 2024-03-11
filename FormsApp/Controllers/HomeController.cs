@@ -154,4 +154,13 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    public IActionResult EditProducts(List<Product> Products)
+    {
+        foreach (var product in Products)
+        {
+            Repository.EditIsActive(product);
+        }
+        return RedirectToAction("Index");
+    }
+
 }
