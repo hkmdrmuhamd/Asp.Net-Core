@@ -32,5 +32,50 @@ namespace EntityFrameworkCoreApp.Controllers
             await _context.SaveChangesAsync(); //Yapılan değişikler asenkron olarak yapılır ve kaydedilir
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var ogr = await _context.Ogrenciler.FindAsync(id);
+            if(ogr == null)
+            {
+                return NotFound();
+            }
+            return View(ogr);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Formu açan kişiye özgü üretilen token'ın geçerliliğini kontrol eder ve sadece o token'a sahip kişinin o sayfaya erişimine izin verir.
+        public async Task<IActionResult> Edit(int id, Ogrenci model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(model);
+                    await _context.SaveChangesAsync();
+                }
+                catch(DbUpdateConcurrencyException) //Aynı anda kayıt güncellemesi yapılırken günceleme yapılan kayıdın silindiği durumda oluşabilecek hatalar
+                {
+                    if(!_context.Ogrenciler.Any(o => o.Id == id)) //Database'de kayıt yoksa true değeri döndürür
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
     }
 }
