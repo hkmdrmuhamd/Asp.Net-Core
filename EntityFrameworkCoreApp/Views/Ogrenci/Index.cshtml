@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Ogrenci>
+
+<h2>Öğrenciler Listesi</h2>
+<hr />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @*<th>Öğrenci Id</th>
+            <th>Öğrenci Ad</th>
+            <th>Öğrenci Soyad</th> bu şekilde elle yazmak yerine direk olarak ilgili yerden isimleri çekebiliriz*@
+            <th style="width: 150px;">@Html.DisplayNameFor(m => m.Id)</th>
+            <th>@Html.DisplayNameFor(m => m.Ad)</th>
+            <th>@Html.DisplayNameFor(m => m.Soyad)</th>
+            <th style="width: 150px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var info in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => info.Id)</td>
+                <td>@Html.DisplayFor(modelItem => info.Ad)</td>
+                <td>@Html.DisplayFor(modelItem => info.Soyad)</td>
+                <td>
+                    <a href="" class="btn btn-sm btn-success">Details</a>
+                    <a href="" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
