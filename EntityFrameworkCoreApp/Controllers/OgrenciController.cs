@@ -77,5 +77,44 @@ namespace EntityFrameworkCoreApp.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ogr = await _context.Ogrenciler.FindAsync(id);
+            if (ogr == null)
+            {
+                return NotFound();
+            }
+            return View("DeleteConfirm", ogr);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm]int id, Ogrenci model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Ogrenciler.Remove(model);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
     }
 }
