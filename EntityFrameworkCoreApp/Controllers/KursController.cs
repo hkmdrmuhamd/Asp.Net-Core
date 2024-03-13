@@ -78,5 +78,41 @@ namespace EntityFrameworkCoreApp.Controllers
             }
             return View(kurs);
         }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if(id == null) 
+            {
+                return NotFound(); 
+            }
+            var kurs = await _context.Kurslar.FindAsync(id);
+            if (kurs == null)
+            {
+                return NotFound();
+            }
+            return View("DeleteConfirm", kurs);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] // CSRF koruması için eklenmiştir, formda bunu unutmayın
+        public async Task<IActionResult> Delete(int id)
+        {
+            var kurs = await _context.Kurslar.FindAsync(id);
+            if (kurs == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Kurslar.Remove(kurs);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", new { id = id, saveChangesError = true });
+            }
+        }
+
     }
 }

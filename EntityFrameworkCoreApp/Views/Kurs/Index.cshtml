@@ -18,7 +18,7 @@
                 <td>@Html.DisplayFor(modelItem => kurs.Baslik)</td>
                 <td>
                     <a asp-controller="Kurs" asp-action="Edit" asp-route-id="@kurs.KursId" class="btn btn-sm btn-success">Edit</a>
-                    <a href="" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-controller="Kurs" asp-action="Delete" asp-route-id="@kurs.KursId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }
