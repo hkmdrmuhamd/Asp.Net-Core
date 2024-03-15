@@ -1,3 +1,4 @@
+using EntityFrameworkCoreApp.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkApp.Data
@@ -11,5 +12,7 @@ namespace EntityFrameworkApp.Data
         public DbSet<Kurs> Kurslar => Set<Kurs>(); //Set<Kurs>() methodu ile Kurs sınıfı DbSet'e dönüştürüldü.
         public DbSet<Ogrenci> Ogrenciler => Set<Ogrenci>(); 
         public DbSet<KursKayit> KursKayitlari => Set<KursKayit>();
+        public DbSet<Ogretmen> Ogretmenler => Set<Ogretmen>();
+
     }
 }
