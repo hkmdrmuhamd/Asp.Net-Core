@@ -39,7 +39,11 @@ namespace EntityFrameworkCoreApp.Controllers
             {
                 return NotFound();
             }
-            var ogr = await _context.Ogrenciler.FindAsync(id);
+            var ogr = await _context
+                            .Ogrenciler
+                            .Include(o => o.KursKayitlari) //Öncelikle bu kısımda Include metodu ile ilişkili tabloları dahil ediyoruz
+                            .ThenInclude(o => o.Kurs) //Daha sonra ThenInclude metodu ile ilişkili tabloların içindeki diğer ilişkili tablolarını dahil ediyoruz
+                            .FirstOrDefaultAsync(o => o.Id == id);
             if(ogr == null)
             {
                 return NotFound();

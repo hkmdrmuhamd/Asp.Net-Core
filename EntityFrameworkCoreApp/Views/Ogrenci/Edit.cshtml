@@ -2,25 +2,38 @@
 
 <h2>Öğrenci Bilgi Güncelleme</h2>
 <hr />
+<div class="row">
+    <div class="col-8">
+        <form asp-controller="Ogrenci" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Ad" class="form-label">Öğrenci Adı</label>
+                <input asp-for="Ad" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Soyad" class="form-label">Öğrenci Soyadı</label>
+                <input asp-for="Soyad" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Öğrenci Emaili</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Telefon" class="form-label">Öğrenci Telefonu</label>
+                <input asp-for="Telefon" class="form-control" />
+            </div>
 
-<form asp-controller="Ogrenci" asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-    <div class="mb-3">
-        <label asp-for="Ad" class="form-label">Öğrenci Adı</label>
-        <input asp-for="Ad" class="form-control" />
+            <button class="btn btn-secondary">Kaydet</button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label asp-for="Soyad" class="form-label">Öğrenci Soyadı</label>
-        <input asp-for="Soyad" class="form-control" />
+    <div class="col-4">
+        <h4>Kurslar</h4>
+        <hr />
+        <ul>
+            @foreach (var item in @Model.KursKayitlari)
+            {
+                <li>@item.Kurs.Baslik</li>
+            }
+        </ul>
     </div>
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">Öğrenci Emaili</label>
-        <input asp-for="Email" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="Telefon" class="form-label">Öğrenci Telefonu</label>
-        <input asp-for="Telefon" class="form-control" />
-    </div>
-
-    <button class="btn btn-secondary">Kaydet</button>
-</form>
+</div>
