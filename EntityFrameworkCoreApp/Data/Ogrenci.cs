@@ -15,6 +15,12 @@ namespace EntityFrameworkApp.Data
         public string? Ad { get; set; }
         [DisplayName("Öðrencinin Soyadý")]
         public string? Soyad { get; set; }
+        public string AdSoyad { 
+            get
+            {
+                return this.Ad + " " + this.Soyad;
+            } 
+        }
         public string? Email { get; set; }
         public string? Telefon { get; set; }
 

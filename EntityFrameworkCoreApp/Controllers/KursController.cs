@@ -93,7 +93,7 @@ namespace EntityFrameworkCoreApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // CSRF koruması için eklenmiştir, formda bunu unutmayın
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var kurs = await _context.Kurslar.FindAsync(id);
