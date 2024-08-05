@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 using ProductsAPI.Models;
 
 namespace ProductsAPI.Controllers
@@ -9,27 +10,22 @@ namespace ProductsAPI.Controllers
     //Buraya api/products da yazabilirdik ikisi de aynı şey fakat dinamik hale getirmek için ilk kullanım daha doğru olur.
     public class ProductsController : ControllerBase //Api COntroller oluşturduğumuzda Viewlerle çalışmayacağımız için ControllerBase kullanmalıyız
     {
-        private static List<Product>? _products;
+        private readonly DatabaseContext _context;
 
-        public ProductsController()
+        public ProductsController(DatabaseContext context)
         {
-            _products = new List<Product>
-            {
-                new() { id = 1, ProductName = "Iphone12", Price = 30000, IsActive = false },
-                new() { id = 2, ProductName = "Iphone13", Price = 40000, IsActive = true },
-                new() { id = 3, ProductName = "Iphone14", Price = 50000, IsActive = false },
-                new() { id = 4, ProductName = "Iphone15", Price = 60000, IsActive = true }
-            };
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            if (_products == null)
+            if (_context == null)
             {
                 return NotFound();
             }
-            return Ok(_products);
+            var products = await _context.Products.ToListAsync();
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
@@ -40,7 +36,7 @@ namespace ProductsAPI.Controllers
                 return NotFound(); //Bu kullanım yerine özelleştirilmiş kullanım için StatusCode(404, "bulunamadı") gibi bir değer de yazılabilir.
             }
 
-            var p = _products?.FirstOrDefault(i => i.id == id);
+            var p = _context?.Products.FirstOrDefault(i => i.id == id);
             if (p == null)
             {
                 return NotFound();
