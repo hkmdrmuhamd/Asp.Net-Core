@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using ProductsAPI.Models;
 
 namespace ProductsAPI.Controllers
@@ -22,15 +23,29 @@ namespace ProductsAPI.Controllers
         }
 
         [HttpGet]
-        public List<Product>? GetProducts()
+        public IActionResult GetProducts()
         {
-            return _products;
+            if (_products == null)
+            {
+                return NotFound();
+            }
+            return Ok(_products);
         }
 
         [HttpGet("{id}")]
-        public Product GetProduct(int id)
+        public IActionResult GetProduct(int? id)
         {
-            return _products?.FirstOrDefault(i => i.id == id) ?? new Product(); // eğer değer yoksa yeni boş bir product oluştur.
+            if (id == null)
+            {
+                return NotFound(); //Bu kullanım yerine özelleştirilmiş kullanım için StatusCode(404, "bulunamadı") gibi bir değer de yazılabilir.
+            }
+
+            var p = _products?.FirstOrDefault(i => i.id == id);
+            if (p == null)
+            {
+                return NotFound();
+            }
+            return Ok(p);
         }
     }
 }
