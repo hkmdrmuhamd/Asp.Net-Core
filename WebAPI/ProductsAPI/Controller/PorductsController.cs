@@ -12,6 +12,7 @@ namespace ProductsAPI.Controllers
     {
         private readonly DatabaseContext _context;
 
+
         public ProductsController(DatabaseContext context)
         {
             _context = context;
@@ -55,6 +56,40 @@ namespace ProductsAPI.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetProduct), new { id = product.id }, product);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, Product product)
+        {
+            if (id != product.id)
+            {
+                return BadRequest();
+            }
+
+            var p = await _context.Products.FirstOrDefaultAsync(i => i.id == id);
+
+            if (p == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                p.ProductName = product.ProductName;
+                p.Price = product.Price;
+                p.IsActive = product.IsActive;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
+                return NoContent();
+            }
+
+
         }
     }
 }
