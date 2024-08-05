@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
+using ProductsAPI.DTO;
 using ProductsAPI.Models;
 
 namespace ProductsAPI.Controllers
@@ -25,19 +26,19 @@ namespace ProductsAPI.Controllers
             {
                 return NotFound();
             }
-            var products = await _context.Products.ToListAsync();
+            var products = await _context.Products.Where(i => i.IsActive).Select(p => ProductToDTO(p)).ToListAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProduct(int? id)
+        public async Task<IActionResult> GetProduct(int? id)
         {
             if (id == null)
             {
                 return NotFound(); //Bu kullanım yerine özelleştirilmiş kullanım için StatusCode(404, "bulunamadı") gibi bir değer de yazılabilir.
             }
 
-            var p = _context?.Products.FirstOrDefault(i => i.id == id);
+            var p = await _context?.Products.Where(p => p.id == id).Select(p => ProductToDTO(p)).FirstOrDefaultAsync();
             if (p == null)
             {
                 return NotFound();
@@ -108,6 +109,16 @@ namespace ProductsAPI.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+
+        private static ProductDTO ProductToDTO(Product p)
+        {
+            return new ProductDTO
+            {
+                id = p.id,
+                ProductName = p.ProductName,
+                Price = p.Price
+            };
         }
     }
 }
