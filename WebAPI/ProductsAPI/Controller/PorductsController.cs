@@ -43,5 +43,18 @@ namespace ProductsAPI.Controllers
             }
             return Ok(p);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct(Product product)
+        {
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetProduct), new { id = product.id }, product);
+        }
     }
 }
