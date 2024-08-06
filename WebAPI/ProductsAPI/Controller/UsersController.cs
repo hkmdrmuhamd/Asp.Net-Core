@@ -9,10 +9,12 @@ namespace ProductsAPI.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private UserManager<AppUser> _userManager;
-        public UsersController(UserManager<AppUser> userManager)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost("register")]
@@ -41,6 +43,26 @@ namespace ProductsAPI.Controllers
                 return StatusCode(201);
             }
             return BadRequest(result.Errors);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return NotFound(new { message = "email hatalı kullanıcı bulunamadı" });
+            }
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            if (result.Succeeded)
+            {
+                return Ok(new { token = "token" });
+            }
+            return Unauthorized();
         }
     }
 }
