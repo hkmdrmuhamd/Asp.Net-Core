@@ -38,7 +38,7 @@ namespace ProductsAPI.Controllers
                 return NotFound(); //Bu kullanım yerine özelleştirilmiş kullanım için StatusCode(404, "bulunamadı") gibi bir değer de yazılabilir.
             }
 
-            var p = await _context?.Products.Where(p => p.id == id).Select(p => ProductToDTO(p)).FirstOrDefaultAsync();
+            var p = await _context.Products.Where(p => p.id == id).Select(p => ProductToDTO(p)).FirstOrDefaultAsync();
             if (p == null)
             {
                 return NotFound();
@@ -113,12 +113,14 @@ namespace ProductsAPI.Controllers
 
         private static ProductDTO ProductToDTO(Product p)
         {
-            return new ProductDTO
+            var entity = new ProductDTO();
+            if (p != null)
             {
-                id = p.id,
-                ProductName = p.ProductName,
-                Price = p.Price
-            };
+                entity.id = p.id;
+                entity.ProductName = p.ProductName;
+                entity.Price = p.Price;
+            }
+            return entity;
         }
     }
 }
