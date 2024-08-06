@@ -1,11 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using ProductsAPI.DTO;
 using ProductsAPI.Models;
+using ProductsAPI.Services;
 
 namespace ProductsAPI.Controllers
 {
@@ -15,12 +12,12 @@ namespace ProductsAPI.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IConfiguration _configuration;
-        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
+        private readonly JwtToken _jwt;
+        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, JwtToken jwt)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _configuration = configuration;
+            _jwt = jwt;
         }
 
         [HttpPost("register")]
@@ -66,28 +63,11 @@ namespace ProductsAPI.Controllers
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (result.Succeeded)
             {
-                return Ok(new { token = GenerateJWT(user) });
+                return Ok(new { token = _jwt.GenerateJWT(user) });
             }
             return Unauthorized();
         }
 
-        private object GenerateJWT(AppUser user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Secret").Value ?? ""); //Burada uapılan işlem AppSettings dosyasındaki Secret'i bul ve o değeri al değer yoksa boş değer ata.
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
-                    new Claim[] { //Token üretilirken içerisinde olmasını istediğimiz bilgileri ekleriz.
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), //Kullanıcı id değeri
-                        new Claim(ClaimTypes.Name, user.UserName ?? ""),
-                    }
-                ),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature) //token'i şifrelemek içindir
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor); //Token'i oluşturmak için kullanılır.
-            return tokenHandler.WriteToken(token);
-        }
+
     }
 }
