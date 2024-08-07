@@ -26,7 +26,8 @@ namespace ProductsAPI.Services
                     }
                 ),
                 Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature) //token'i şifrelemek içindir
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature), //token'i şifrelemek içindir
+                Issuer = "muhammedhkmdr.com" //api'nin kim tarafından sağlandığını belirtir.
             };
             var token = tokenHandler.CreateToken(tokenDescriptor); //Token'i oluşturmak için kullanılır.
             return tokenHandler.WriteToken(token);
