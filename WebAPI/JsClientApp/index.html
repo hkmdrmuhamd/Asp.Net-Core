@@ -7,6 +7,8 @@
   </head>
   <body>
     <button onclick="getProducts()">Get Products</button>
+    <button onclick="getProductById()">Get Product</button>
+    <button onclick="login()">Login</button>
 
     <div id="divProducts"></div>
 
@@ -15,6 +17,33 @@
         const response = await fetch("http://localhost:5043/api/products");
         const products = await response.json();
         displayProducts(products);
+      };
+
+      const getProductById = async () => {
+        const token = JSON.parse(localStorage.getItem("token"));
+        const response = await fetch("http://localhost:5043/api/products/4", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const product = await response.json();
+        console.log(product);
+      };
+
+      const login = async () => {
+        const response = await fetch("http://localhost:5043/api/users/login", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "hkmdr@muhammed",
+            password: "123456",
+          }),
+        });
+        const result = await response.json();
+        localStorage.setItem("token", JSON.stringify(result.token));
       };
 
       const displayProducts = (products) => {
