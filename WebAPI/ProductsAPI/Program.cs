@@ -7,13 +7,26 @@ using Microsoft.OpenApi.Models;
 using ProductsAPI.Models;
 using ProductsAPI.Services;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; //Cors ayarlamasını yapılandırmak için bir anahtar değeri belirledik.
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 builder.Services.AddDbContext<DatabaseContext>(x => x.UseSqlite("Data Source=products.db"));
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<DatabaseContext>();
 builder.Services.AddScoped<JwtToken>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        options.AddPolicy(MyAllowSpecificOrigins, policy =>
+        {
+            policy.WithOrigins("http://127.0.0.1:5500")
+            .AllowAnyHeader() //Bu urlden gelen tüm header'leri kabul et
+            .AllowAnyMethod(); //Tüm methodları kabul et
+        });
+    });
+});
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
@@ -92,6 +105,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins); //Cors tanımlaması routing ile Authorization arasına yapılmalıdır.
 app.UseAuthorization();
 
 app.MapControllers();
